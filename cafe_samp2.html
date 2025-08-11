@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathalu</title>
+    <style>
+        /* General body and font styling for a clean, modern look */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f3e9; /* Light cream/beige */
+            color: #4b4b4b; /* Dark gray for text */
+            overflow-x: hidden;
+        }
+
+        /* Hide the radio buttons from view */
+        input[type="radio"] {
+            display: none;
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #f7f3e9;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .nav-links label {
+            text-decoration: none;
+            color: #4b4b4b;
+            margin: 0 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-links label:hover {
+            color: #8c7851; /* A gentle brown/taupe */
+        }
+
+        .contact {
+            font-weight: bold;
+        }
+
+        /* Main content container */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px; /* To account for the fixed header */
+        }
+
+        /* Styling for all sections */
+        .section {
+            display: none; /* Hide all sections by default */
+            width: 100%;
+            height: 100vh;
+            padding: 0 40px;
+            box-sizing: border-box;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            padding-top: 20px;
+        }
+
+        /* CSS to show the correct section when a radio button is checked */
+        #intro-radio:checked ~ #intro,
+        #about-radio:checked ~ #about,
+        #menu-radio:checked ~ #menu,
+        #gallery-radio:checked ~ #gallery {
+            display: flex;
+        }
+
+        /* The rest of the CSS for styling the content sections */
+        .intro-left, .intro-center, .intro-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .intro-left {
+            padding-left: 20px;
+        }
+
+        .welcome-text {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .line {
+            width: 50px;
+            height: 2px;
+            background-color: #8c7851;
+        }
+
+        .intro-left h1 {
+            font-size: 80px;
+            margin: 10px 0;
+            color: #3f3e3e;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .intro-center img {
+            width: 100%;
+            max-width: 400px;
+            object-fit: cover;
+        }
+
+        .intro-right .image-container {
+            width: 100%;
+            height: 250px;
+            background-color: #c9e4d6; /* Light pastel green */
+        }
+
+        .intro-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .description {
+            margin-top: 20px;
+        }
+
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Styling for other sections (hidden by default) */
+        #about, #menu, #gallery {
+            padding: 100px 40px;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        #about h2, #menu h2, #gallery h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #8c7851;
+        }
+
+        #about p, #menu li {
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* ----------------------- NEW MENU STYLING ----------------------- */
+        .menu-container {
+            display: flex;
+            justify-content: space-around;
+            width: 80%; /* Adjust as needed */
+            max-width: 900px;
+            background-color: #fcf8f0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            flex-wrap: wrap;
+        }
+
+        .menu-column {
+            flex-basis: 45%;
+            min-width: 300px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .menu-column h3 {
+            font-size: 28px;
+            color: #8c7851;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e0d9c4;
+            padding-bottom: 5px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .item-name {
+            font-weight: bold;
+        }
+
+        .item-price {
+            color: #8c7851;
+            font-weight: normal;
+        }
+
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">కధలు...</div>
+        <nav class="nav-links">
+            <label for="intro-radio">Intro</label>
+            <label for="about-radio">About</label>
+            <label for="menu-radio">Menu</label>
+            <label for="gallery-radio">Gallery</label>
+        </nav>
+        <div class="contact">
+            📞 999-888-7776
+        </div>
+    </header>
+
+    <div class="main-content">
+        <input type="radio" id="intro-radio" name="section-selector" checked>
+        <input type="radio" id="about-radio" name="section-selector">
+        <input type="radio" id="menu-radio" name="section-selector">
+        <input type="radio" id="gallery-radio" name="section-selector">
+
+        <section id="intro" class="section">
+            <div class="intro-left">
+                <div class="welcome-text">
+                    <div class="line"></div>
+                    <p>Welcome to</p>
+                </div>
+                <h1>COFFEE కధలు</h1>
+            </div>
+            <div class="intro-center">
+                <img src="coffee_1.png" alt="A cup of coffee with beans spilled around it">
+            </div>
+            <div class="intro-right">
+                <div class="image-container">
+                    <img src="cofffe_2.png" alt="A close-up of a coffee cup">
+                </div>
+                <div class="description">
+                    <p>Every cup holds a story… where coffee becomes a friend to your sweetest moments</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <h2>About Us</h2>
+            <p>coffee Kathalu: as the name says, every cup of coffee begins a new story.Here, coffee is not just a drink… its a memory, a friendship, an emotion.
+                Every cup we brew is meant to delight you with its aroma and touch your heart with its taste.
+                From coffee to tea to sweet treats--everything here is crafted to make your moments more special.</p>
+            <h3>Sit back, take a sip, and let your story begin.</h3>
+            <p>ADDRESS: Banjara hills, Road number-7</p> <p>Email: coffeekathalu@gmail.com</p>
+        </section>
+
+        <section id="menu" class="section">
+            <h2>Our Menu</h2>
+            <div class="menu-container">
+                <div class="menu-column">
+                    <h3>Coffee</h3>
+                    <p class="menu-item"><span class="item-name">Espresso</span><span class="item-price">150rs</span></p>
+                    <p class="menu-item"><span class="item-name">Latte</span><span class="item-price">250rs</span></p>
+                    <p class="menu-item"><span class="item-name">Cappuccino</span><span class="item-price">199rs</span></p>
+                    <p class="menu-item"><span class="item-name">Americano</span><span class="item-price">170rs</span></p>
+                    <p class="menu-item"><span class="item-name">Macchiato</span><span class="item-price">270rs</span></p>
+                </div>
+                <div class="menu-column">
+                    <h3>Bakery</h3>
+                    <p class="menu-item"><span class="item-name">Croissant</span><span class="item-price">90rs</span></p>
+                    <p class="menu-item"><span class="item-name">Muffin</span><span class="item-price">82rs</span></p>
+                    <p class="menu-item"><span class="item-name">Macrons</span><span class="item-price">70rs</span></p>
+                    <p class="menu-item"><span class="item-name">Cookies</span><span class="item-price">100rs</span></p>
+                    <p class="menu-item"><span class="item-name">Cupcake</span><span class="item-price">120rs</span></p>
+                </div>
+                <div class="menu-column">
+                    <h3>Tea & More</h3>
+                    <p class="menu-item"><span class="item-name">Hot Chocolate</span><span class="item-price">245rs</span></p>
+                    <p class="menu-item"><span class="item-name">Green Tea</span><span class="item-price">120rs</span></p>
+                    <p class="menu-item"><span class="item-name">Black coffee</span><span class="item-price">140rs</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section">
+            <h2>Gallery</h2>
+            <div class="gallery-grid">
+                <img src="cofffe_3.png" alt="Gallery image 1">
+                <img src="coffe_4.png" alt="Gallery image 2">
+                <img src="cofffee_5.png" alt="Gallery image 3">
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
